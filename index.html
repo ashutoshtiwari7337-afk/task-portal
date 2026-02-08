@@ -1,1 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Task Portal</title>
 
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: #020617;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    color: white;
+  }
+
+  .box {
+    background: #0f172a;
+    padding: 25px;
+    width: 340px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0,0,0,0.6);
+  }
+
+  input, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+  }
+
+  button {
+    background: #22c55e;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .task {
+    background: #1e293b;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 6px;
+  }
+
+  .emoji {
+    font-size: 70px;
+    margin-top: 15px;
+    animation: pop 0.4s ease;
+  }
+
+  @keyframes pop {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="box" id="loginBox">
+  <h2>Login</h2>
+  <input id="userid" placeholder="User ID">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <p id="error" style="color:red;"></p>
+</div>
+
+<!-- MESSAGE + CHECK -->
+<div class="box hidden" id="taskBox">
+  <h3 id="userName"></h3>
+  <div class="task" id="userMessage"></div>
+  <p style="margin-top:15px;">Task completed?</p>
+  <button onclick="showGift(true)">Yes</button>
+  <button onclick="showGift(false)">No</button>
+</div>
+
+<!-- FINAL GIFT -->
+<div class="box hidden" id="giftBox">
+  <h2 id="finalName"></h2>
+  <p>Here is your gift 🎁</p>
+  <div class="emoji" id="giftEmoji"></div>
+</div>
+
+<script>
+const users = {
+  Deepak: {
+    pass: "Deepak78",
+    msg: "Aaj hilaya nhi kya?"
+  },
+  Mohit: {
+    pass: "Mohit44",
+    msg: "Roz hilana h"
+  },
+  Pratik: {
+    pass: "Pratik99",
+    msg: "Daily mutthi maro"
+  },
+  Adarsh: {
+    pass: "Adarsh56",
+    msg: "Kitni bar hilaya"
+  },
+  Utkarsh: {
+    pass: "Utkarsh24",
+    msg: "Subah sham daily hilao"
+  },
+  Varshikey: {
+    pass: "Varshikey45",
+    msg: "24×7 har ek question solve kro, mutthi maro"
+  },
+  Sreejan: {
+    pass: "Srijan77",
+    msg: "Subah dopahar sham, all time mutthi"
+  }
+};
+
+let currentUser = "";
+
+function login() {
+  const id = userid.value;
+  const pass = password.value;
+
+  if (users[id] && users[id].pass === pass) {
+    currentUser = id;
+
+    loginBox.classList.add("hidden");
+    taskBox.classList.remove("hidden");
+
+    userName.innerText = id;
+    userMessage.innerText = users[id].msg;
+  } else {
+    error.innerText = "Invalid ID or Password";
+  }
+}
+
+function showGift(done) {
+  taskBox.classList.add("hidden");
+  giftBox.classList.remove("hidden");
+
+  finalName.innerText = currentUser;
+  giftEmoji.innerText = done ? "🍑" : "🍌";
+}
+</script>
+
+</body>
+</html>
